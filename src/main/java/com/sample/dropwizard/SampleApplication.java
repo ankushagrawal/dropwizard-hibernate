@@ -46,7 +46,7 @@ public class SampleApplication extends Application<SampleConfiguration> {
         environment.healthChecks().register("template",healthCheck);
 
 
-        environment.admin().addTask(new StopServerTask(1));
+//        environment.admin().addTask(new StopServerTask(1));
 
         final PersonDao personDao = new PersonDao(hibernate.getSessionFactory());
 
