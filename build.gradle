@@ -1,0 +1,66 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'io.dropwizard', name: 'dropwizard-core', version: '1.1.0'
+    compile group: 'io.dropwizard', name: 'dropwizard-hibernate', version: '1.1.0'
+    compile group: 'io.dropwizard', name: 'dropwizard-db', version: '1.0.6' //no 1.1.0
+//    compile group: 'io.dropwizard', name: 'dropwizard-jdbi', version: '1.1.0'
+    compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.6'
+
+}
+
+
+
+
+
+allprojects {
+    apply plugin: 'idea'
+    group = 'com.sample.dropwizard'
+
+}
+
+mainClassName = 'com.sample.dropwizard.SampleApplication'
+
+run {
+    args 'server', 'config.yaml'
+}
+
+
+
+jar {
+    manifest.attributes("Main-Class": mainClassName)
+}
+
+buildscript {
+    repositories {
+        maven {
+            name 'Gradle Shadow'
+            url 'http://dl.bintray.com/content/johnrengelman/gradle-plugins'
+        }
+        maven { url 'http://repo1.maven.org/maven2' }
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.1.2'
+    }
+}
+
+shadowJar {
+    zip64  = true
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.SF'
+
+}
