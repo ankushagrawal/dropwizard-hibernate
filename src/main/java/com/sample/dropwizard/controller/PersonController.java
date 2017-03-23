@@ -32,7 +32,7 @@ public class PersonController {
     @Timed
     public void test() {
         List<Person> personList = new ArrayList<Person>();
-        for(int i = 1;i<=100000;i++) {
+        for(int i = 1;i<=1000;i++) {
             Person person = new Person();
             person.setName("a1");
             personList.add(person);
