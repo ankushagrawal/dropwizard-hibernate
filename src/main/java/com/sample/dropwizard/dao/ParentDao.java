@@ -15,7 +15,6 @@ import java.util.List;
 public class ParentDao extends AbstractDAO<Parent> {
 
     private SessionFactory sessionFactory;
-    private PlaceChildDao childDao;
     /**
      * Creates a new DAO with a given session provider.
      *
@@ -24,12 +23,6 @@ public class ParentDao extends AbstractDAO<Parent> {
     public ParentDao(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
-    }
-
-    public ParentDao(SessionFactory sessionFactory, PlaceChildDao childDao) {
-        super(sessionFactory);
-        this.sessionFactory = sessionFactory;
-        this.childDao = childDao;
     }
 
     public void createBulk(List<Parent> places) {
