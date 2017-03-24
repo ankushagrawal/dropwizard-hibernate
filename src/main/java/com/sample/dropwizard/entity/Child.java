@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by ankush.a on 24/03/17.
  */
 @Entity
-@Table(name = "place_child")
+@Table(name = "child")
 @TableGenerator(name = "idGen",table = "ID_GEN")
 public class Child {
 
@@ -20,8 +20,8 @@ public class Child {
         this.name = name;
     }
 
-    public void setParentPlace(Parent parentPlace) {
-        this.parent = parentPlace;
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     @ManyToOne( cascade = CascadeType.ALL)

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ankush.a on 24/03/17.
  */
 @Entity
-@Table(name="place")
+@Table(name="parent")
 @TableGenerator(name = "idGen",table = "ID_GEN")
 public class Parent {
 

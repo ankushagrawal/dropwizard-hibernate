@@ -48,7 +48,7 @@ public class ParentDao extends AbstractDAO<Parent> {
             Parent p = parentList.get(i);
             List<Child> children = p.getChildren();
             for(Child c: children) {
-                c.setParentPlace(p);
+                c.setParent(p);
             }
             session.save(p);
 
