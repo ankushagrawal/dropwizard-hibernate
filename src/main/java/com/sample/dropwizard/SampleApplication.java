@@ -2,12 +2,13 @@ package com.sample.dropwizard;
 
 
 import com.sample.dropwizard.controller.PersonController;
-import com.sample.dropwizard.controller.PlaceController;
+import com.sample.dropwizard.controller.ParentController;
 import com.sample.dropwizard.controller.SampleController;
 import com.sample.dropwizard.dao.PersonDao;
-import com.sample.dropwizard.dao.PlaceDao;
+import com.sample.dropwizard.dao.ParentDao;
+import com.sample.dropwizard.entity.Parent;
 import com.sample.dropwizard.entity.Person;
-import com.sample.dropwizard.entity.Place;
+import com.sample.dropwizard.entity.Child;
 import com.sample.dropwizard.tasks.StopServerTask;
 import io.dropwizard.Application;
 import io.dropwizard.db.DataSourceFactory;
@@ -30,7 +31,7 @@ public class SampleApplication extends Application<SampleConfiguration> {
     }
 
     private final HibernateBundle<SampleConfiguration> hibernate =
-            new HibernateBundle<SampleConfiguration>(Person.class, Place.class) {
+            new HibernateBundle<SampleConfiguration>(Person.class, Parent.class, Child.class) {
         @Override
         public DataSourceFactory getDataSourceFactory(SampleConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -52,11 +53,11 @@ public class SampleApplication extends Application<SampleConfiguration> {
         environment.admin().addTask(new StopServerTask(1));
 
         final PersonDao personDao = new PersonDao(hibernate.getSessionFactory());
-        final PlaceDao placeDao = new PlaceDao(hibernate.getSessionFactory());
+        final ParentDao parentDao = new ParentDao(hibernate.getSessionFactory());
 
         environment.jersey().register(controller);
         environment.jersey().register(new PersonController(personDao));
-        environment.jersey().register(new PlaceController(placeDao));
+        environment.jersey().register(new ParentController(parentDao));
     }
 
 
