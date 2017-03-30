@@ -1,6 +1,7 @@
 package com.sample.dropwizard.controller;
 
 import com.codahale.metrics.annotation.Timed;
+import com.sample.dropwizard.annotations.MyCustomAnnotation;
 import com.sample.dropwizard.dao.ParentDao;
 import com.sample.dropwizard.entity.Parent;
 import com.sample.dropwizard.entity.Child;
@@ -9,13 +10,14 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by ankush.a on 24/03/17.
  */
-@Path("/place")
+@Path("/person")
 @Produces(MediaType.APPLICATION_JSON)
 public class ParentController {
     private ParentDao parentDao;
@@ -42,7 +44,17 @@ public class ParentController {
 
     @GET
     @Timed
+    @MyCustomAnnotation(studentName = "annotate1",stuAddress = "dfdf")
     public void test() {
+        Class clazz = ParentController.class;
+        for(Method method : clazz.getMethods()){
+            MyCustomAnnotation annotation = (MyCustomAnnotation)method.getAnnotation(MyCustomAnnotation.class);
+            if(annotation!=null){
+                System.out.println("stu address " +annotation.stuAddress());
+                System.out.println("stu name " + annotation.studentName());
+                System.out.println("stu stream " +annotation.stuStream());
+            }
+        }
         List<Parent> parents = new ArrayList<Parent>();
         for(int i = 1;i<=10000;i++) {
             Parent place = new Parent();
